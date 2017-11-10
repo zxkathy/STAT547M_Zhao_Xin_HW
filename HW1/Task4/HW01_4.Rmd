@@ -3,7 +3,7 @@ title: "HW1 Task4"
 output: github_document
 ---
 
-```{r  message=FALSE}
+```{r  message=FALSE, warning=FALSE}
 library(purrr)
 library(repurrrsive)
 library(singer)
@@ -114,12 +114,15 @@ leaflet(cities) %>% addTiles() %>%
   )
 ```
 
-setwd("/Users/kathy/Dropbox/Kathy/Course/STAT545M/STAT547M_Zhao_Xin_HW/HW1/Task4")
-![plot](paste(getwd(), "/map_image/", "map2.png", sep = "")
-![plot](paste(getwd(), "/map_image/", "map3.png", sep = "")
-![plot](paste(getwd(), "/map_image/", "map4.png", sep = "")
-![plot](paste(getwd(), "/map_image/", "map5.png", sep = "")
-![plot](paste(getwd(), "/map_image/", "map6.png", sep = "")
+
+![plot](map2.png)
+
+![plot](map3.png)
+
+
+
+![plot](map5.png)
+
 
 In the record of Million Song Dataset, more songs are produced in Eastern US than Western US. Also, we can see a lot of blue dots along the coastline of US than in the middle. Could be the reason that artists are highly to be inspired by the sea and beach. 
 
