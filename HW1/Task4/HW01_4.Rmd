@@ -32,9 +32,10 @@ singer_loc_noNA <-
 
 singer_loc <- 
   singer_loc_noNA %>%
-  head(20) %>%
+  head(25) %>%
   mutate(addr = unlist(
-           purrr::map2(longitude, latitude, possibly_address)))
+           purrr::map2(longitude, latitude, possibly_address))) %>%
+  filter(!is.na(addr))
 
 singer_loc_display <- 
   singer_loc %>%
@@ -132,6 +133,8 @@ Among all the questions I tried, I found that Task 4 is most challenging and int
 
 The most frustrating thing when doing this assignment is that `revgeocode` performs not stable for finding some cities based on the latitude and longtitude. Sometimes it could return to a city name, sometimes it fails. When kniting the file, I need to wait for quite a long time because of that. 
 
-## Go to next task: [Task 6]()
+#### Go to previous task: [Task 2](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW1/Task2/HW01_2.md)
+
+#### Go to next task: [Task 6](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW1/Task6/HW01_6.md)
 
 
