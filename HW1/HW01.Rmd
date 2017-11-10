@@ -1,0 +1,362 @@
+---
+title: "HW1: Data wrangling wrap up"
+output: html_document
+---
+
+```{r message=FALSE}
+library(tidyverse)
+library(stringr)
+library(gapminder)
+library(robustbase)
+library(dplyr)
+library(purrr)
+library(repurrrsive)
+library(singer)
+library(ggmap)
+library(tidyverse)
+library(broom)
+library(MASS)
+library(listviewer)
+```
+
+## Task 1. Character data
+
+#### 14.2.5 Exercises
+
+Q1(a): In code that doesn’t use stringr, you’ll often see paste() and paste0(). What’s the difference between the two functions? 
+
+A1(a): Default value of sep with `paste` function is `sep = " "`, and default value of sep with `paste0` function is `sep = ""`. By default, `paste0` has no separator and output single charactor.
+
+```{r}
+paste("a", "b", "c")
+paste0("a", "b", "c")
+```
+
+From the following example, we can see paste0 can put the strings together and then add the sep element. 
+
+```{r}
+paste(rep("student", 4), rep("number", 4), seq(1,4,1), sep = "_", collapse = ", ")
+paste0(rep("student", 4), rep("number", 4), seq(1,4,1), sep = "_", collapse = ", ")
+```
+
+Q1(b): What stringr function are they equivalent to? 
+
+A1(b): `paste0` and `paste` are equivalent to function of `str_c`.
+
+```{r}
+str_c("a", "b", "c")
+```
+
+
+Q1(c): How do the functions differ in their handling of NA?
+
+A1(c): `paste` recognizes `NA` as character element by default, while `str_c` recognizes NA as null element. 
+
+```{r}
+x <- c("a", NA, "c")
+paste(x)
+str_c(x)
+str_c(str_replace_na(x))
+```
+
+Q2: In your own words, describe the difference between the sep and collapse arguments to str_c().
+
+A2: When your input is several vectors, sep is the what you put in between ith element of vectors, collapse is what you put in betwen new combined new strings, and turn your result into one string.
+
+```{r}
+str_c(rep("student", 4), rep("number", 4), seq(1,4,1), sep = "_")
+str_c(rep("student", 4), rep("number", 4), seq(1,4,1), sep = "_", collapse = ", ")
+```
+
+Q3: Use str_length() and str_sub() to extract the middle character from a string. What will you do if the string has an even number of characters?
+
+A3: I decide to output the middle two characters if the string has an even number of characters. 
+
+```{r}
+x <- "abcde"
+y <- "abcd"
+str_sub(x, (str_length(x)+1)/2, -(str_length(x)+1)/2)
+str_sub(y, (str_length(y)+1)/2, -(str_length(y)+1)/2)
+```
+
+Q4: What does str_wrap() do? When might you want to use it?
+
+A4: When we have long paragraphs, `str_wrap()` can format them. The way I am using it is as follows. 
+
+```{r}
+x <- "This is my test paragraph, and I can write anything here. "
+y <- "That is my second test paragraph, and I just want to see what could happen."
+cat(str_c(str_wrap(c(x, y), width = 20, indent = 1, exdent = 3), collapse = "\n"))
+```
+
+Q5: What does str_trim() do? What’s the opposite of str_trim()?
+
+A5: Trim whitespace of the string, from the direction specified.
+
+```{r}
+str_trim("  string", side = "right")
+str_trim("  string", side = "left")
+```
+
+Q6: Write a function that turns (e.g.) a vector c("a", "b", "c") into the string a, b, and c. Think carefully about what it should do if given a vector of length 0, 1, or 2.
+```{r}
+x1 <-  c("ab", "cd", "e", "f")
+x2 <-  c("ab", "cd", "e")
+x3 <-  c("ab")
+turn_string <- function(vector) {
+  res <- ""
+  if (length(vector) < 2){
+    res <- str_c(vector)
+  }
+  else if (length(vector) == 2){
+    res <- str_c(vector[1], vector[2], sep = " and ")
+  }
+  else
+  {
+    res1 <- str_c(vector[-length(vector)], collapse = ", ")
+    res2 <- vector[length(vector)]
+    res <- str_c(res1, res2, sep = " and ") 
+  }
+  cat(res)
+}
+
+turn_string(x1)
+turn_string(x2)
+turn_string(x3)
+```
+
+
+#### 14.3.1.1 Exercises
+
+Q1: Explain why each of these strings don’t match a `\`: `\`, `\\`, `\\\`.
+
+A1: We need to escape `\`, so we need to create regular expression `\\`, because we are using a string, so add two escapes(`\`) before each `\`. 
+`\`: escape. 
+`\\`: can be also interpreted as `\`.
+`\\\`: `\` plus escape, the sentence is not finished.
+
+Q2: How would you match the sequence `"'\`?
+
+A2: We need to add `\\` in front of every normal expressions. 
+
+```{r}
+y = "\"\'\\"
+writeLines(y)
+str_view(c(y, "abc"), "\\\"\\'\\\\")
+```
+
+Q3: What patterns will the regular expression `\..\..\..` match? How would you represent it as a string?
+
+A3: 
+```{r}
+x = "abc.a.b.c"
+y = "\\..\\..\\.."
+writeLines(y)
+str_view(c(y, "abc"), "\\\\..\\\\..\\\\..")
+```
+
+14.3.2.1 Exercises
+
+1. How would you match the literal string `$^$`?
+
+```{r}
+y = "$^$"
+writeLines(y)
+str_view(c(y, "abc"), "\\$\\^\\$")
+```
+
+2. Given the corpus of common words in stringr::words, create regular expressions that find all words that:
+
+Start with “y”.
+End with “x”
+Are exactly three letters long. (Don’t cheat by using str_length()!)
+Have seven letters or more.
+Since this list is long, you might want to use the match argument to str_view() to show only the matching or non-matching words.
+
+
+
+
+## Writing Functions
+
+Q: Write one (or more) functions that do something useful to pieces of the Gapminder data. It is logical to think about computing on the mini-data frames corresponding to the data for each specific country, location, year, band, album, … This would pair well with the prompt below about working with a nested data frame, as you could apply your function there.
+
+A: I want to use robust regression, using robustbase::lmrob(). The aim of this function is calculate coefficients of robust linear regression models between x = log(gdpPercap) and y = lifeExp, given a specific year or country. (The reason I take log of x is to make the coefficients nicer.)
+
+```{r}
+rob_reg <- function(input){
+  if(is.numeric(input)) {
+    if(!input %in% unique(gapminder$year)){
+      stop('Gapminder dataset doesn\'t have the year you specified!\n')
+    }else{
+      subdat = gapminder %>%
+        filter(year == input)
+      fit <- lmrob(lifeExp ~ I(log(gdpPercap)), data = subdat)
+      return(coef(fit))
+    }
+  }
+  
+  if(is.character(input)){
+    ctry <- input %>%
+      str_trim(side = "both") %>%
+      str_to_lower()
+    if(!ctry %in% str_to_lower(unique(gapminder$country))){
+      stop('Gapminder dataset doesn\'t have the country you specified!\n')
+    }else{
+      subdat = gapminder %>%
+        mutate(lower_ctry = str_to_lower(country)) %>%
+        filter(lower_ctry == ctry)
+      fit <- lmrob(lifeExp ~ I(log(gdpPercap)), data = subdat)
+      return(coef(fit))
+    }
+  }
+  else{
+    stop('Please recheck the format of your input!\n')
+  }
+}
+```
+Let's test the function and check whether it works as expected. Firstly, I input a correct year and the result should be the corresponding intercept and slope. Then I input an incorrect year and it should give me an error. 
+
+```{r}
+rob_reg(1952)
+#rob_reg(2017)
+```
+
+Then, let's try to input the character, we can input the correct format, such as `Canada` or `United States`, and we can even input lower-cased countries, with several spaces before the country name, such as `   canada`. All these inputs could generate corresponding results. But if you input some country doesn't exist in gapminder dataset, it should give you an error message. 
+```{r}
+rob_reg("United States")
+rob_reg("  canada")
+#rob_reg("wonderland")
+```
+
+## Task 4: Work With the Singer Data
+
+#### Task 4.1
+The singer_location dataframe in the singer package contains geographical information stored in two different formats: 1. as a (dirty!) variable named city; 2. as a latitude / longitude pair (stored in latitude, longitude respectively). The function revgeocode from the ggmap library allows you to retrieve some information for a pair (vector) of longitude, latitude (warning: notice the order in which you need to pass lat and long). Use purrr to map latitude and longitude into human readable information on the band’s origin places. 
+
+```{r results='asis'}
+latlng_address <- function(longi, lati, output = "address") {
+  revgeocode(c(longi, lati), output = "address")
+}
+possibly_address <- possibly(latlng_address, "Address not found")
+
+singer_loc_noNA <- 
+  singer_locations %>%
+  filter(!is.na(latitude), !is.na(longitude)) %>%
+  head(25)
+
+singer_loc <- 
+  singer_loc_noNA %>%
+  mutate(addr = unlist(
+           purrr::map2(longitude, latitude, possibly_address)))
+
+singer_loc_display <- 
+  singer_loc %>%
+  dplyr::select(city, addr) 
+singer_loc_display%>%
+  knitr::kable(digits = 2, align ="r", padding = 10)
+```
+
+For this question, I firstly built a function that takes two location parameters to calculate the address, and then use `possibly` function to avoid potential errors where the `revgeocode` could not find the place for the given logitude and latitude. Because it takes quite a lot time for the `revgeocode` to find all the locations each run, so I only take the first 10 entries of the singer location data with NA filtered out. 
+
+
+Not all of the time we make a research through revgeocode() we get a result. What can we do to avoid those errors to bite us? (look at possibly() in purrr…)
+
+#### Task 4.2
+
+Try to check wether the place in city corresponds to the information you retrieved.
+
+```{r, results='asis}
+find_state_abb <- function(city_name){
+  state.abb[match(city_name, str_to_lower(state.name))] %>%
+    str_to_lower()
+}
+
+
+tokenize <- function(string, trim = FALSE) {
+  if (trim) {
+    string_trim <- str_trim(sub("^[^,]*,", "", string))
+  } else {
+    string_trim <- string
+  }
+  string_split <- unlist(str_split(string_trim, boundary("word")))
+  str_to_lower(string_split)
+}
+
+city <- singer_loc_display$city[6]
+address <- singer_loc_display$addr[4]
+
+city_state_match <- function(address, city) {
+  address <- str_to_lower(address)
+  city <- str_to_lower(city)
+  is_match <- FALSE
+  if (str_detect(address, city)) {
+    is_match <- TRUE
+  } else {
+    token_address <- tokenize(address, trim = TRUE)
+    token_city <- tokenize(city)
+    token_city_state <- find_state_abb(token_city)
+    token_city_state <- token_city_state[!is.na(token_city_state)]
+    new_token_city <- c(token_city, token_city_state)
+    token_match <- intersect(new_token_city, token_address)
+    if (length(token_match) != 0) {
+      is_match <- TRUE
+    }
+  }
+  is_match
+}
+
+singer_loc_display %>% 
+  mutate(match_or_not = 
+           unlist(map2(addr, city, city_state_match))) %>%
+  knitr::kable(digits = 2, align ="r", padding = 10)
+```
+
+
+#### Task 4.3 Go visual: give a look to the library leaflet and plot some information about the bands. A snippet of code is provided below.
+
+
+
+
+```{r}
+gap_nested <- gapminder %>% 
+   group_by(continent, country) %>% 
+   nest()
+
+gap_nested %>% View()
+gap_nested[[1, "data"]]
+```
+
+```{r, warning=F}
+le_vs_yr <- function(df) {
+  lm(lifeExp ~ I(year - 1950), data = df)
+}
+rob_vs_yr <- function(df){
+   rlm(lifeExp ~ I(year - 1950), data = df)
+}
+
+gap_nested_fit <- 
+  gap_nested %>% 
+   mutate(fit_ls = map(data, le_vs_yr), 
+          fit_rob = map(data, rob_vs_yr))
+jsonedit(gap_nested)
+
+gap_coefs <- gap_nested_fit %>% 
+   select(continent, country, tidy_ls, tidy_rob) %>% 
+   unnest(tidy)
+
+gap_nested_fit[["fit_ls"]] %>%
+  map_dbl(list("coefficients", 1))
+
+?map_dbl
+?jsonedit
+gap_nested_tidy <- gap_nested_fit %>% 
+  mutate(tidy_ls = map(fit_ls, tidy), 
+         tidy_rob = map(fit_rob, tidy))
+
+gap_nested_fit$fit_rob[[1]]
+
+tidy(gap_nested_fit$fit_rob[[1]])
+
+```
+
+When I am doing Task 6 and would like to compare the coef between ls fitting and robust fitting, I found that tidError in overscope_eval_next(overscope, expr) : object 'tidy_ls' not found
