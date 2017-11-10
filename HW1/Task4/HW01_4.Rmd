@@ -1,12 +1,13 @@
 ---
 title: "HW1 Task4"
-output: html_document
+output: github_document
 ---
 
-```{r}
+```{r  message=FALSE}
 library(purrr)
 library(repurrrsive)
 library(singer)
+library(stringr)
 library(ggmap)
 library(leaflet)
 library(dplyr)
@@ -16,9 +17,10 @@ library(dplyr)
 ## Task 4: Work With the Singer Data
 
 #### Task 4.1
+
 The singer_location dataframe in the singer package contains geographical information stored in two different formats: 1. as a (dirty!) variable named city; 2. as a latitude / longitude pair (stored in latitude, longitude respectively). The function revgeocode from the ggmap library allows you to retrieve some information for a pair (vector) of longitude, latitude (warning: notice the order in which you need to pass lat and long). Use purrr to map latitude and longitude into human readable information on the band’s origin places. 
 
-```{r results='asis'}
+```{r results='asis', message=FALSE}
 latlng_address <- function(longi, lati, output = "address") {
   revgeocode(c(longi, lati), output = "address")
 }
@@ -26,17 +28,18 @@ possibly_address <- possibly(latlng_address, "Address not found")
 
 singer_loc_noNA <- 
   singer_locations %>%
-  filter(!is.na(latitude), !is.na(longitude)) 
+  filter(!is.na(latitude), !is.na(longitude), !is.na(city)) 
 
 singer_loc <- 
   singer_loc_noNA %>%
-  head(25) %>%
+  head(20) %>%
   mutate(addr = unlist(
            purrr::map2(longitude, latitude, possibly_address)))
 
 singer_loc_display <- 
   singer_loc %>%
-  dplyr::select(city, addr) 
+  head(15)%>%
+  dplyr::select(title, artist_name, artist_hotttnesss, city, addr) 
 singer_loc_display%>%
   knitr::kable(digits = 2, align ="r", padding = 10)
 ```
@@ -85,19 +88,21 @@ city_state_match <- function(address, city) {
   is_match
 }
 
+
 singer_loc_full <-
   singer_loc %>% 
   mutate(match_or_not = 
            unlist(map2(addr, city, city_state_match)))
 
 singer_loc_full %>%
-  dplyr::select(city, addr, match_or_not) %>%
+  dplyr::select(title, artist_name, city, addr, match_or_not) %>%
   knitr::kable(digits = 2, align ="r", padding = 10)
 ```
 
+From the above, we can see only 1 city does not match with the address retrieved from `revgeocode`. If we look into that, we can see it is correct the two are not matching. 
 
 #### Task 4.3 Go visual: give a look to the library leaflet and plot some information about the bands. A snippet of code is provided below.
-```{r}
+```{r eval=FALSE}
 cities <- singer_loc_noNA %>%
   dplyr::select(city, latitude, longitude, artist_hotttnesss)
 
@@ -108,5 +113,25 @@ leaflet(cities) %>% addTiles() %>%
   )
 ```
 
+
+![plot](paste(getwd(), "/map_image/", "map2.png", sep = "")
+![plot](paste(getwd(), "/map_image/", "map3.png", sep = "")
+![plot](paste(getwd(), "/map_image/", "map4.png", sep = "")
+![plot](paste(getwd(), "/map_image/", "map5.png", sep = "")
+![plot](paste(getwd(), "/map_image/", "map6.png", sep = "")
+
 In the record of Million Song Dataset, more songs are produced in Eastern US than Western US. Also, we can see a lot of blue dots along the coastline of US than in the middle. Could be the reason that artists are highly to be inspired by the sea and beach. 
+
+#### Note:
+
+Due to the function for visualization is only for `HTML_document` output not `github_document` output, so it is easy to show the interactive map here. I have attached serveral pictures so that you could have an idea of what I am talking about. In addition, the html file is also uploaded to my repo, and you can download it to check. 
+
+## Report your process
+
+Among all the questions I tried, I found that Task 4 is most challenging and interesting. The thinking of doing Task 4 is easy, but I need to fix a lot of problems when doing the matching: As the `city` column of `singer_locations` are not formatted well, i.e. sometimes, it is the full name of the states, sometimes, it's other country/city outside of US, sometimes, it includes some special charactor that could not display in R. As no pattern could be found and no available functions ready, so I have to build up my own functions for the use of `purrr: map()`. 
+
+The most frustrating thing when doing this assignment is that `revgeocode` performs not stable for finding some cities based on the latitude and longtitude. Sometimes it could return to a city name, sometimes it fails. When kniting the file, I need to wait for quite a long time because of that. 
+
+## Go to next task: [Task 6]()
+
 

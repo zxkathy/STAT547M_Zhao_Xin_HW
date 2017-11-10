@@ -1,6 +1,6 @@
 ---
 title: "HW1 Task 1"
-output: html_document
+output: github_document
 ---
 
 ```{r message=FALSE}
@@ -131,7 +131,7 @@ A2: We need to add `\\` in front of every normal expressions.
 ```{r}
 y = "\"\'\\"
 writeLines(y)
-str_view(c(y, "abc"), "\\\"\\'\\\\")
+#str_view(c(y, "abc"), "\\\"\\'\\\\")
 ```
 
 Q3: What patterns will the regular expression `\..\..\..` match? How would you represent it as a string?
@@ -141,7 +141,7 @@ A3:
 x = "abc.a.b.c"
 y = "\\..\\..\\.."
 writeLines(y)
-str_view(c(y, "abc"), "\\\\..\\\\..\\\\..")
+#str_view(c(y, "abc"), "\\\\..\\\\..\\\\..")
 ```
 
 14.3.2.1 Exercises
@@ -151,8 +151,11 @@ str_view(c(y, "abc"), "\\\\..\\\\..\\\\..")
 ```{r}
 y = "$^$"
 writeLines(y)
-str_view(c(y, "abc"), "\\$\\^\\$")
+#str_view(c(y, "abc"), "\\$\\^\\$")
 ```
 
 This is how much I tried, since I am focusing on the following questions, I don't have much time finishing this question. 
 
+#### Note:
+
+As `str_view` function is for `HTML_document` output not `github_document` output, so it is easy to show the results here. But the code will generate the desired results. 

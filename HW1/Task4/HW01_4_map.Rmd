@@ -1,0 +1,30 @@
+---
+title: "HW1 Task4"
+output: html_document
+---
+
+```{r  message=FALSE}
+library(singer)
+library(stringr)
+library(ggmap)
+library(leaflet)
+library(dplyr)
+```
+
+## Interactive map
+
+```{r}
+singer_loc_noNA <- 
+  singer_locations %>%
+  filter(!is.na(latitude), !is.na(longitude)) 
+
+cities <- singer_loc_noNA %>%
+  dplyr::select(city, latitude, longitude, artist_hotttnesss)
+
+  
+leaflet(cities) %>% addTiles() %>%
+  addCircles(lng = ~longitude, lat = ~latitude, weight = 1,
+    radius = ~artist_hotttnesss * 3000, popup = ~city
+  )
+```
+

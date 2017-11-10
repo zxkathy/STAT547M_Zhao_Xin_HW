@@ -1,0 +1,76 @@
+---
+title: "HW1 Task2"
+output: github_document
+---
+
+```{r  message=FALSE, warning=FALSE}
+library(dplyr)
+library(gapminder)
+library(robustbase)
+library(stringr)
+```
+
+## Task2: Writing Functions
+
+#### Write one (or more) functions
+
+I want to use robust regression, using robustbase::lmrob(). The aim of this function is calculate coefficients of robust linear regression models between x = log(gdpPercap) and y = lifeExp, given a specific year or country. (The reason I take log of x is to make the coefficients nicer.)
+
+```{r}
+rob_reg <- function(input){
+  if(is.numeric(input)) {
+    if(!input %in% unique(gapminder$year)){
+      stop('Gapminder dataset doesn\'t have the year you specified!\n')
+    }else{
+      subdat = gapminder %>%
+        filter(year == input)
+      fit <- lmrob(lifeExp ~ I(log(gdpPercap)), data = subdat)
+      return(coef(fit))
+    }
+  }
+  
+  if(is.character(input)){
+    ctry <- input %>%
+      str_trim(side = "both") %>%
+      str_to_lower()
+    if(!ctry %in% str_to_lower(unique(gapminder$country))){
+      stop('Gapminder dataset doesn\'t have the country you specified!\n')
+    }else{
+      subdat = gapminder %>%
+        mutate(lower_ctry = str_to_lower(country)) %>%
+        filter(lower_ctry == ctry)
+      fit <- lmrob(lifeExp ~ I(log(gdpPercap)), data = subdat)
+      return(coef(fit))
+    }
+  }
+  else{
+    stop('Please recheck the format of your input!\n')
+  }
+}
+```
+
+Let's test the function and check whether it works as expected. Firstly, I input a correct year and the result should be the corresponding intercept and slope. 
+
+```{r}
+rob_reg(1952)
+```
+
+Then I input an incorrect year and it should give me an error. 
+
+```{r error = TRUE}
+rob_reg(2017)
+```
+
+Then, let's try to input the character, we can input the correct format, such as `Canada` or `United States`, and we can even input lower-cased countries, with several spaces before the country name, such as `   canada`. All these inputs could generate corresponding results. 
+
+```{r}
+rob_reg("United States")
+rob_reg("  canada")
+```
+
+If you input some country doesn't exist in gapminder dataset, it should give you an error message. 
+
+```{r error = TRUE}
+ob_reg("wonderland")
+```
+
