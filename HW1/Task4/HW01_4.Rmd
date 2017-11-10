@@ -114,7 +114,7 @@ leaflet(cities) %>% addTiles() %>%
   )
 ```
 
-
+setwd("/Users/kathy/Dropbox/Kathy/Course/STAT545M/STAT547M_Zhao_Xin_HW/HW1/Task4")
 ![plot](paste(getwd(), "/map_image/", "map2.png", sep = "")
 ![plot](paste(getwd(), "/map_image/", "map3.png", sep = "")
 ![plot](paste(getwd(), "/map_image/", "map4.png", sep = "")
@@ -125,7 +125,7 @@ In the record of Million Song Dataset, more songs are produced in Eastern US tha
 
 #### Note:
 
-Due to the function for visualization is only for `HTML_document` output not `github_document` output, so it is easy to show the interactive map here. I have attached serveral pictures so that you could have an idea of what I am talking about. In addition, the html file is also uploaded to my repo, and you can download it to check. 
+Due to the function for visualization is only for `HTML_document` output not `github_document` output, so it is easy to show the interactive map here. I have attached serveral pictures so that you could have an idea of what I am talking about. In addition, the html file is also uploaded to my repo, and you can download that [HTML file](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW1/Task4/HW01_4_map.html) to check. 
 
 ## Report your process
 
