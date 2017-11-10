@@ -1,6 +1,6 @@
 ---
 title: "HW1: Data wrangling wrap up"
-output: html_document
+output: github_document
 ---
 
 ```{r message=FALSE}
@@ -17,6 +17,7 @@ library(tidyverse)
 library(broom)
 library(MASS)
 library(listviewer)
+library(leaflet)
 ```
 
 ## Task 1. Character data
@@ -165,15 +166,7 @@ writeLines(y)
 str_view(c(y, "abc"), "\\$\\^\\$")
 ```
 
-2. Given the corpus of common words in stringr::words, create regular expressions that find all words that:
-
-Start with “y”.
-End with “x”
-Are exactly three letters long. (Don’t cheat by using str_length()!)
-Have seven letters or more.
-Since this list is long, you might want to use the match argument to str_view() to show only the matching or non-matching words.
-
-
+This is how much I tried, since I am focusing on the following questions, I don't have much time finishing this question. 
 
 
 ## Writing Functions
@@ -241,11 +234,11 @@ possibly_address <- possibly(latlng_address, "Address not found")
 
 singer_loc_noNA <- 
   singer_locations %>%
-  filter(!is.na(latitude), !is.na(longitude)) %>%
-  head(25)
+  filter(!is.na(latitude), !is.na(longitude)) 
 
 singer_loc <- 
   singer_loc_noNA %>%
+  head(25) %>%
   mutate(addr = unlist(
            purrr::map2(longitude, latitude, possibly_address)))
 
@@ -256,8 +249,7 @@ singer_loc_display%>%
   knitr::kable(digits = 2, align ="r", padding = 10)
 ```
 
-For this question, I firstly built a function that takes two location parameters to calculate the address, and then use `possibly` function to avoid potential errors where the `revgeocode` could not find the place for the given logitude and latitude. Because it takes quite a lot time for the `revgeocode` to find all the locations each run, so I only take the first 10 entries of the singer location data with NA filtered out. 
-
+For this question, I firstly built a function that takes two location parameters to calculate the address, and then use `possibly` function to avoid potential errors where the `revgeocode` could not find the place for the given logitude and latitude. Because it takes quite a lot time for the `revgeocode` to find all the locations each run, so I only take the first 25 entries of the singer location data with NA filtered out. Also, for the beaty of display, I choose the most important info to display in the above and following tables.
 
 Not all of the time we make a research through revgeocode() we get a result. What can we do to avoid those errors to bite us? (look at possibly() in purrr…)
 
@@ -265,12 +257,11 @@ Not all of the time we make a research through revgeocode() we get a result. Wha
 
 Try to check wether the place in city corresponds to the information you retrieved.
 
-```{r, results='asis}
+```{r, results='asis'}
 find_state_abb <- function(city_name){
   state.abb[match(city_name, str_to_lower(state.name))] %>%
     str_to_lower()
 }
-
 
 tokenize <- function(string, trim = FALSE) {
   if (trim) {
@@ -281,9 +272,6 @@ tokenize <- function(string, trim = FALSE) {
   string_split <- unlist(str_split(string_trim, boundary("word")))
   str_to_lower(string_split)
 }
-
-city <- singer_loc_display$city[6]
-address <- singer_loc_display$addr[4]
 
 city_state_match <- function(address, city) {
   address <- str_to_lower(address)
@@ -305,28 +293,41 @@ city_state_match <- function(address, city) {
   is_match
 }
 
-singer_loc_display %>% 
+singer_loc_full <-
+  singer_loc %>% 
   mutate(match_or_not = 
-           unlist(map2(addr, city, city_state_match))) %>%
+           unlist(map2(addr, city, city_state_match)))
+
+singer_loc_full %>%
+  dplyr::select(city, addr, match_or_not) %>%
   knitr::kable(digits = 2, align ="r", padding = 10)
 ```
 
 
 #### Task 4.3 Go visual: give a look to the library leaflet and plot some information about the bands. A snippet of code is provided below.
+```{r}
+cities <- singer_loc_noNA %>%
+  dplyr::select(city, latitude, longitude, artist_hotttnesss)
 
+  
+leaflet(cities) %>% addTiles() %>%
+  addCircles(lng = ~longitude, lat = ~latitude, weight = 1,
+    radius = ~artist_hotttnesss * 3000, popup = ~city
+  )
+```
 
+In the record of Million Song Dataset, more songs are produced in Eastern US than Western US. Also, we can see a lot of blue dots along the coastline of US than in the middle. Could be the reason that artists are highly to be inspired by the sea and beach. 
 
-
+## Task 6: Work with a nested data frame
 ```{r}
 gap_nested <- gapminder %>% 
    group_by(continent, country) %>% 
    nest()
 
 gap_nested %>% View()
-gap_nested[[1, "data"]]
 ```
 
-```{r, warning=F}
+```{r, warning=F, results='asis'}
 le_vs_yr <- function(df) {
   lm(lifeExp ~ I(year - 1950), data = df)
 }
@@ -334,29 +335,46 @@ rob_vs_yr <- function(df){
    rlm(lifeExp ~ I(year - 1950), data = df)
 }
 
-gap_nested_fit <- 
+gap_coefs <- 
   gap_nested %>% 
    mutate(fit_ls = map(data, le_vs_yr), 
-          fit_rob = map(data, rob_vs_yr))
-jsonedit(gap_nested)
-
-gap_coefs <- gap_nested_fit %>% 
-   select(continent, country, tidy_ls, tidy_rob) %>% 
-   unnest(tidy)
-
-gap_nested_fit[["fit_ls"]] %>%
-  map_dbl(list("coefficients", 1))
-
-?map_dbl
-?jsonedit
-gap_nested_tidy <- gap_nested_fit %>% 
+          fit_rob = map(data, rob_vs_yr)) %>% 
   mutate(tidy_ls = map(fit_ls, tidy), 
-         tidy_rob = map(fit_rob, tidy))
+         tidy_rob = map(fit_rob, tidy)) %>%
+  unnest(tidy_ls, tidy_rob) %>%
+  dplyr::select(continent, country, 
+                ls_term = term, ls_est = estimate, 
+                rob_term = term1, rob_est = estimate1)
 
-gap_nested_fit$fit_rob[[1]]
 
-tidy(gap_nested_fit$fit_rob[[1]])
+gap_analysis <- 
+  gap_coefs %>%
+  spread(key = ls_term, value = ls_est) %>%
+  mutate(ls_int = lag(`(Intercept)`), 
+         ls_slope = `I(year - 1950)`) %>% 
+  dplyr::select(continent:rob_est, ls_int, ls_slope) %>%
+  spread(key = rob_term, value = rob_est) %>%
+  mutate(rob_int = lead(`(Intercept)`), 
+         rob_slope = `I(year - 1950)`)  %>% 
+  dplyr::select(continent:ls_slope, rob_int, rob_slope) %>%
+  na.omit() %>%
+  mutate(int_diff_ratio = (rob_int - ls_int)/ls_int, 
+         slope_diff_ratio = (rob_slope - ls_slope)/ls_slope)
 
+
+gap_analysis %>%
+  arrange(desc(slope_diff_ratio)) %>%
+  head(10) %>%
+  knitr::kable(digits = 2, align ="r", padding = 10)
 ```
 
-When I am doing Task 6 and would like to compare the coef between ls fitting and robust fitting, I found that tidError in overscope_eval_next(overscope, expr) : object 'tidy_ls' not found
+I compared the slope and intercept difference of two fittings: OLS and robust LS. It can be seen that Swaziland might have some interesting story because the slope difference of two fittings is as high as 120%. It can be concluded that the linear gitting might not be a good fit for the case, or there are some influential outliers (abnormal data included). 
+
+
+## Report your process
+
+Among all the questions I tried, I found that Task 4 is most challenging and interesting. The thinking of doing Task 4 is easy, but I need to fix a lot of problems when doing the matching: As the `city` column of `singer_locations` are not formatted well, i.e. sometimes, it is the full name of the states, sometimes, it's other country/city outside of US, sometimes, it includes some special charactor that could not display in R. As no pattern could be found and no available functions ready, so I have to build up my own functions for the use of `purrr: map()`. 
+
+When I am doing Task 6 and would like to compare the coef between ls fitting and robust fitting, I found that tidy function does not work for robust method, so I changed the steps of cleaning the data and take a little detour. 
+
+Throughout the whole process of doing the assignment, I searched the website a lot. But finally, I found it is almost impossible to find the specific answers to my specific questions, that could be the way I am describing my questions not clearly. It turned out that the most important source I rely on is R document and package description. 
