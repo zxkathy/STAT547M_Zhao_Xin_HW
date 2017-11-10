@@ -63,6 +63,8 @@ gap_analysis %>%
 
 I compared the slope and intercept difference of two fittings: OLS and robust LS. It can be seen that Swaziland might have some interesting story because the slope difference of two fittings is as high as 120%. It can be concluded that the linear gitting might not be a good fit for the case, or there are some influential outliers (abnormal data included). 
 
+#### Go to previous task: [Task 4](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW1/Task4/HW01_4.md)
+
 
 ## Report your process
 
