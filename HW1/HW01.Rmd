@@ -1,6 +1,6 @@
 ---
 title: "HW1: Data wrangling wrap up"
-output: github_document
+output: html_document
 ---
 
 ```{r message=FALSE}
@@ -373,8 +373,9 @@ I compared the slope and intercept difference of two fittings: OLS and robust LS
 
 ## Report your process
 
-Among all the questions I tried, I found that Task 4 is most challenging and interesting. The thinking of doing Task 4 is easy, but I need to fix a lot of problems when doing the matching: As the `city` column of `singer_locations` are not formatted well, i.e. sometimes, it is the full name of the states, sometimes, it's other country/city outside of US, sometimes, it includes some special charactor that could not display in R. As no pattern could be found and no available functions ready, so I have to build up my own functions for the use of `purrr: map()`. 
+Among all the questions I tried, I found that Task 4 is most challenging and interesting. The thinking of doing Task 4 is easy, but I need to fix a lot of problems when doing the matching: As the `city` column of `singer_locations` are not formatted well, i.e. sometimes, it is the full name of the states, sometimes, it's other country/city outside of US, sometimes, it includes some special charactor that could not display in R. As no pattern could be found and no available functions ready, so I have to build up my own functions for the use of `purrr: map()`. In addition, I have to change the output of the file because R indicates that I am using functions that produce HTML output.
 
 When I am doing Task 6 and would like to compare the coef between ls fitting and robust fitting, I found that tidy function does not work for robust method, so I changed the steps of cleaning the data and take a little detour. 
 
 Throughout the whole process of doing the assignment, I searched the website a lot. But finally, I found it is almost impossible to find the specific answers to my specific questions, that could be the way I am describing my questions not clearly. It turned out that the most important source I rely on is R document and package description. 
+
