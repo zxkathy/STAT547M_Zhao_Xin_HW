@@ -1,4 +1,4 @@
-source('~/Dropbox/Kathy/Course/STAT545M/STAT547M_Zhao_Xin_HW/HW2/lib.R')
+source('lib.R')
 fireDat_ordered <- readRDS("ordered_fireDat.rds")
 
 # PLOT: Weekly forest fire frequency trend by month
@@ -33,16 +33,13 @@ ggsave("weeklyTrend.png", weeklyTrend)
 
 
 # PLOT:
-lsfit <- function(df) {
-	lm(area ~ wind, data = df)
-}
 
 # Find the best month that could use lm
 fireDat_Month <-
 	fireDat_ordered %>%
 	group_by(month) %>%
 	nest() %>%
-	mutate(fit_ls = map(data, lsfit),
+	mutate(fit_ls = map(data, ls_fit),
 				 tidy = map(fit_ls, tidy)) %>%
 	unnest(tidy)
 

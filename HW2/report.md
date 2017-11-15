@@ -5,6 +5,9 @@ HW6 Automating Data-analysis Pipelines
 Overall flowchart of the assignment
 -----------------------------------
 
+<center>
+<img src="out.jpeg" style="width:120.0%" />
+</center>
 Prework
 -------
 
@@ -15,7 +18,7 @@ library(dplyr)
 Data Description
 ----------------
 
-The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names).
+The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names)(Ref 1).
 
 Data Glance
 -----------
@@ -134,7 +137,7 @@ knitr::kable(fire_Day_Month_head, digits = 2, align ="r", padding = 10)
 2. Perform Statistical analysis
 -------------------------------
 
-#### Fit linear model and obtain the coef.s
+#### Fit linear model and obtain the coef.s (area ~ wind)
 
 We are now using the `ordered_fireDat` to do some other analysis.
 
@@ -165,10 +168,31 @@ knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 |    apr|  (Intercept)|    -23.64|       9.71|      -2.44|     0.05|
 |    apr|         wind|      6.97|       1.88|       3.70|     0.01|
 
+It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind.
+
 3. Generate figures
 -------------------
 
 #### Create a figure for each relative humidity levels.
+
+According to the median of relative humidity levels (variable `RH`), I categorize `RH` into two levels, one is below median, one is above median. After that, I did the linear fit and calculate the coefficient estimates. Below is my results:
+
+``` r
+coef_FireDat <- read.delim("coefFireDat.tsv") 
+knitr::kable(coef_FireDat, digits = 2, align ="r", padding = 10)
+```
+
+|  RH\_lvl|         term|  estimate|  std.error|  statistic|  p.value|
+|--------:|------------:|---------:|----------:|----------:|--------:|
+|  RH-high|  (Intercept)|     11.61|       3.69|       3.15|     0.00|
+|  RH-high|         wind|      0.11|       0.79|       0.14|     0.89|
+|   RH-low|  (Intercept)|      8.42|       3.62|       2.33|     0.02|
+|   RH-low|         wind|      1.03|       0.81|       1.26|     0.21|
+
+<center>
+<img src="lmComparison.png" style="width:80.0%" />
+</center>
+From the results of coefficients table and the above graph, we
 
 Reference
 ---------

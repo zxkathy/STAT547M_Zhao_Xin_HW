@@ -1,4 +1,4 @@
-source('~/Dropbox/Kathy/Course/STAT545M/STAT547M_Zhao_Xin_HW/HW2/lib.R')
+source('lib.R')
 
 fireDat <- read.csv("forestFires.csv", header = TRUE, sep = ",") %>%
 	na.omit()

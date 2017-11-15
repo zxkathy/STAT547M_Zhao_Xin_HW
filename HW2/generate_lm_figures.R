@@ -1,17 +1,22 @@
-source('~/Dropbox/Kathy/Course/STAT545M/STAT547M_Zhao_Xin_HW/HW2/lib.R')
+source('lib.R')
 fireDat_ordered <- readRDS("ordered_fireDat.rds")
 
 fireDat_RH <- 
 	fireDat_ordered %>%
 	filter(area > 0 & area< 100) %>%
-	mutate(RH_lvl = ifelse(RH < median(fireDat_ordered$RH), "RH-low", "RH-high")) %>%
-	group_by(RH_lvl) 
+	mutate(RH_l = if_else(RH < median(fireDat_ordered$RH), "RH-low", "RH-high"),
+				 RH_lvl = as_factor(RH_l)) 
 
-fireDat_RH %>%
+
+coefFireDat <- 
+	fireDat_RH %>%
+	group_by(RH_lvl) %>%
 	nest() %>%
-	mutate(fit_ls = map(data, lsfit), 
-				 tidy = map(fit_ls, tidy)) %>%
-	unnest(tidy)
+	mutate(fit_ls = map(data, ls_fit),
+				 tidylm = map(fit_ls, tidy)) %>%
+	unnest(tidylm)
+write.table(coefFireDat, "coefFireDat.tsv", sep = "\t",
+						row.names = FALSE, quote = FALSE)
 
 lm_compa <-
 	fireDat_RH %>%

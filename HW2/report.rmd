@@ -7,16 +7,19 @@ output:
 
 ## Overall flowchart of the assignment
 
+<center>
+![](out.jpeg){
+width=120% }
+</center>
 
 ## Prework
-```{r message=FALSE}
-library(dplyr)
-```
+
+I make the libreary and some common variables which could be used throughout the project into the `lib.R` file, and use `source()` function to refer and take use of them.
 
 
 ## Data Description
 
-The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names). 
+The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names)(Ref 1). 
 
 ## Data Glance
 
@@ -89,7 +92,7 @@ width=80% }
 
 ## 2. Perform Statistical analysis
 
-#### Fit linear model and obtain the coef.s
+#### Fit linear model and obtain the coef.s (area ~ wind)
 
 We are now using the `ordered_fireDat` to do some other analysis. 
 
@@ -106,16 +109,25 @@ bestMonthRes <- read.delim("bestMonthRes.tsv")
 knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 ```
 
+It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind. 
+
 ## 3. Generate figures
 
 #### Create a figure for each relative humidity levels.
 
-According to the median of relative humidity levels (variable `RH`), I categorize `RH` into two levels, one is below median, one is above median. 
+According to the median of relative humidity levels (variable `RH`), I categorize `RH` into two levels, one is below median, one is above median. After that, I did the linear fit and calculate the coefficient estimates. Below is my results:
+
+```{r results='asis'}
+coef_FireDat <- read.delim("coefFireDat.tsv") 
+knitr::kable(coef_FireDat, digits = 2, align ="r", padding = 10)
+```
 
 <center>
 ![](lmComparison.png){
-width=60% }
+width=80% }
 </center>
+
+From the results of coefficients table and the above graph, there is some linear relationship between fire burned area and the wind speed when the relative humidity level is low.
 
 ## Reference
 1. P. Cortez and A. Morais. A Data Mining Approach to Predict Forest Fires using Meteorological Data. 
