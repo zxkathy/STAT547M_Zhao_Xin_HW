@@ -48,8 +48,8 @@ knitr::kable(forestFire_head, digits = 2, align ="r", padding = 10)
 
 Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names).
 
-1. Perform Exploratory Analysis
--------------------------------
+Task 1. Perform Exploratory Analysis
+------------------------------------
 
 #### Reorder the data by month
 
@@ -114,8 +114,8 @@ levels(ordered_fireDat$day)
 
 Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good! We could retrieve that for later use.
 
-2. Perform Statistical Analyses
--------------------------------
+Task 2. Perform Statistical Analyses
+------------------------------------
 
 Now we are interested to see the how the weekly fire count trend varies by each month.
 
@@ -196,11 +196,8 @@ knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 
 It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind.
 
-3. Generate Figures
--------------------
-
-3. Generate Figures
--------------------
+Task 3. Generate Figures
+------------------------
 
 #### Create a figure for each relative humidity levels.
 
