@@ -11,7 +11,7 @@ output:
 ![](structure.jpeg){
 width=120% }
 </center>
- 
+The above figure shows my dependency relationship of all my files. Note that I didn't include the figures in the structure graph.
 
 ## Prework
 

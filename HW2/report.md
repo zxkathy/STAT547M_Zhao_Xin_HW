@@ -8,6 +8,8 @@ Overall flowchart of the assignment
 <center>
 <img src="structure.jpeg" style="width:120.0%" />
 </center>
+The above figure shows my dependency relationship of all my files. Note that I didn't include the figures in the structure graph.
+
 Prework
 -------
 
