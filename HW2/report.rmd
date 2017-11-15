@@ -3,6 +3,8 @@ title: "HW6 Automating Data-analysis Pipelines"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   github_document
+fig_width: 6 
+fig_height: 4 
 ---
 
 ## Overall flowchart of the assignment
@@ -126,7 +128,7 @@ knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 
 It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind. 
 
-## 3. Generate Figures
+##3. Generate Figures
 
 #### Create a figure for each relative humidity levels.
 
