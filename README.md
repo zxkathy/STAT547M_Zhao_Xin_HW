@@ -10,4 +10,4 @@
 ## [Homework 2](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/tree/master/HW2): Automating Data-analysis Pipelines
 
 - #### [Report](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW2/report.md)
-- #### [Task 2](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW2/Makefile)
+- #### [Makefile](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW2/Makefile)
