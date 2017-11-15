@@ -17,24 +17,6 @@ I make the libreary and some common variables which could be used throughout the
 source("lib.R")
 ```
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-    ## 
-    ## Attaching package: 'tidyr'
-
-    ## The following object is masked from 'package:reshape2':
-    ## 
-    ##     smiths
-
     ## Warning: package 'purrr' was built under R version 3.4.2
 
 Data Description

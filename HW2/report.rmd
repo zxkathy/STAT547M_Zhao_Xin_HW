@@ -16,7 +16,8 @@ width=120% }
 ## Prework
 
 I make the libreary and some common variables which could be used throughout the project into the `lib.R` file, and use `source()` function to refer and take use of them.
-```{r}
+
+```{r message=FALSE}
 source("lib.R")
 ```
 
