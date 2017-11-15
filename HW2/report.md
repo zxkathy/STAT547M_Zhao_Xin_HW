@@ -6,14 +6,36 @@ Overall flowchart of the assignment
 -----------------------------------
 
 <center>
-<img src="out.jpeg" style="width:120.0%" />
+<img src="structure.jpeg" style="width:120.0%" />
 </center>
 Prework
 -------
 
+I make the libreary and some common variables which could be used throughout the project into the `lib.R` file, and use `source()` function to refer and take use of them.
+
 ``` r
-library(dplyr)
+source("lib.R")
 ```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+    ## 
+    ## Attaching package: 'tidyr'
+
+    ## The following object is masked from 'package:reshape2':
+    ## 
+    ##     smiths
+
+    ## Warning: package 'purrr' was built under R version 3.4.2
 
 Data Description
 ----------------
@@ -192,7 +214,7 @@ knitr::kable(coef_FireDat, digits = 2, align ="r", padding = 10)
 <center>
 <img src="lmComparison.png" style="width:80.0%" />
 </center>
-From the results of coefficients table and the above graph, we
+From the results of coefficients table and the above graph, there is some linear relationship between fire burned area and the wind speed when the relative humidity level is low.
 
 Reference
 ---------

@@ -8,13 +8,17 @@ output:
 ## Overall flowchart of the assignment
 
 <center>
-![](out.jpeg){
+![](structure.jpeg){
 width=120% }
 </center>
 
 ## Prework
 
 I make the libreary and some common variables which could be used throughout the project into the `lib.R` file, and use `source()` function to refer and take use of them.
+```{r}
+source("lib.R")
+```
+
 
 
 ## Data Description
