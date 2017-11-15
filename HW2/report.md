@@ -199,6 +199,9 @@ It could be seen that the coefficients of apr are significant, which means are n
 3. Generate Figures
 -------------------
 
+Reference
+---------
+
 #### Create a figure for each relative humidity levels.
 
 According to the median of relative humidity levels (variable `RH`), I categorize `RH` into two levels, one is below median, one is above median. After that, I did the linear fit and calculate the coefficient estimates. Below is my results:
