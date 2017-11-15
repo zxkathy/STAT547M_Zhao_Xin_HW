@@ -13,7 +13,7 @@ width=120% }
 </center>
 The above figure shows my dependency relationship of all my files. Note that I didn't include the figures in the structure graph.
 
-## Prework
+##Prework
 
 I make the libreary and some common variables which could be used throughout the project into the `lib.R` file, and use `source()` function to refer and take use of them.
 
@@ -22,12 +22,12 @@ source("lib.R")
 ```
 
 
-## Data Description
+##Data Description
 
-The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names) (Ref 1). 
+The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features (Ref 1). 
 
 
-## Data Glance
+##Data Glance
 
 ```{r results='asis'}
 forestFire_head <- read.csv("forestFires.csv", header = TRUE, sep = ",") %>%
@@ -35,10 +35,11 @@ forestFire_head <- read.csv("forestFires.csv", header = TRUE, sep = ",") %>%
 knitr::kable(forestFire_head, digits = 2, align ="r", padding = 10)
 ```
  
+Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names).
 
-## 1. Perform Exploratory Analysis 
+##1. Perform Exploratory Analysis 
 
-#### Reorder the data by month
+####Reorder the data by month
 
 First, let's show the bar chart of number of forest fires within each month, with `month` unordered. 
 <center>
@@ -52,8 +53,9 @@ Then, let's show the bar chart of number of forest fires within each month, with
 width=60% }
 </center>
 
+It shows that August and September are the two months when the forest fires happen the most.
 
-#### Sort the month by total burned area within the month
+####Sort the month by total burned area within the month
 
 Let's show the bar chart of total burned forest fires area within each month by another way. 
 
@@ -61,7 +63,8 @@ Let's show the bar chart of total burned forest fires area within each month by 
 ![](orderedSum.png){
 width=60% }
 </center>
-	 
+
+The above figure sorting the month according to the total burned forest area within that month.	 
 
 ```{r results='asis'}
 fire_Month_Area_Ordered <- readRDS("fire_Month_Area_Ordered.rds")
@@ -70,7 +73,7 @@ knitr::kable(fire_Month_Area_Ordered, digits = 2, align ="r", padding = 10)
 
 
 
-#### Save the reordered dataset for future use and explore the reordered effect
+####Save the reordered dataset for future use and explore the reordered effect
 
 Let's see whether the levels of `ordered_fireDat.rds` is properly ordered.
 
@@ -80,14 +83,11 @@ levels(ordered_fireDat$month)
 levels(ordered_fireDat$day)
 ```
 
-Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good!
+Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good! We could retrieve that for later use.
 
-
-## 2. Perform Statistical Analyses
+##2. Perform Statistical Analyses
 
 Now we are interested to see the how the weekly fire count trend varies by each month.
-
-I built the following form of dataframe for the convinience of plotting using `ggplot`.
 
 ```{r, results = 'asis'}
 fire_Day_Month_head <-
@@ -96,23 +96,28 @@ fire_Day_Month_head <-
 knitr::kable(fire_Day_Month_head, digits = 2, align ="r", padding = 10)
 ```
 
+I built the above form of dataframe for the convinience of plotting using `ggplot`.
+
 <center>
 ![](weeklyTrend.png){
 width=80% }
 </center>
 
+It could see that the weekly trend have silimar patterns across months. Wednesdays are the day that the forest fire happens least.  
 
-#### Fit linear model and obtain the coef.s (area ~ wind)
+####Fit linear model and obtain the coef.s 
 
 We are now using the `ordered_fireDat` to do some other analysis. 
 
 ```{r results='asis'}
 bestMonthAnalysis_head <- read.delim("bestMonthAnalysis.tsv") %>%
-	head()
+	head(16)
 knitr::kable(bestMonthAnalysis_head, digits = 2, align ="r", padding = 10)
 ```
 
-#### Select best month based on whose coefficients' are significant.
+I fit a linear model of (area ~ wind) in the above code and see whether I could find any coeff.s of some months that are significantly different from 0.
+
+####Select best month based on whose coefficients' are significant.
 
 ```{r results='asis'}
 bestMonthRes <- read.delim("bestMonthRes.tsv") 

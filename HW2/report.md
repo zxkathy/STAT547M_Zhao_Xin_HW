@@ -22,7 +22,7 @@ source("lib.R")
 Data Description
 ----------------
 
-The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names) (Ref 1).
+The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features (Ref 1).
 
 Data Glance
 -----------
@@ -46,6 +46,8 @@ knitr::kable(forestFire_head, digits = 2, align ="r", padding = 10)
 |    8|    6|    sep|  tue|  91.0|  129.5|  692.6|   7.0|  13.1|   63|   5.4|   0.0|     0|
 |    7|    5|    sep|  sat|  92.5|   88.0|  698.6|   7.1|  22.8|   40|   4.0|   0.0|     0|
 
+Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names).
+
 1. Perform Exploratory Analysis
 -------------------------------
 
@@ -59,6 +61,8 @@ Then, let's show the bar chart of number of forest fires within each month, with
 <center>
 <img src="orderedCount.png" style="width:60.0%" />
 </center>
+It shows that August and September are the two months when the forest fires happen the most.
+
 #### Sort the month by total burned area within the month
 
 Let's show the bar chart of total burned forest fires area within each month by another way.
@@ -66,6 +70,8 @@ Let's show the bar chart of total burned forest fires area within each month by 
 <center>
 <img src="orderedSum.png" style="width:60.0%" />
 </center>
+The above figure sorting the month according to the total burned forest area within that month.
+
 ``` r
 fire_Month_Area_Ordered <- readRDS("fire_Month_Area_Ordered.rds")
 knitr::kable(fire_Month_Area_Ordered, digits = 2, align ="r", padding = 10)
@@ -104,14 +110,12 @@ levels(ordered_fireDat$day)
 
     ## [1] "sun" "mon" "tue" "wed" "thu" "fri" "sat"
 
-Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good!
+Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good! We could retrieve that for later use.
 
 2. Perform Statistical Analyses
 -------------------------------
 
 Now we are interested to see the how the weekly fire count trend varies by each month.
-
-I built the following form of dataframe for the convinience of plotting using `ggplot`.
 
 ``` r
 fire_Day_Month_head <-
@@ -138,16 +142,20 @@ knitr::kable(fire_Day_Month_head, digits = 2, align ="r", padding = 10)
 |  sat|    feb|      4|
 |  sun|    mar|      7|
 
+I built the above form of dataframe for the convinience of plotting using `ggplot`.
+
 <center>
 <img src="weeklyTrend.png" style="width:80.0%" />
 </center>
-#### Fit linear model and obtain the coef.s (area ~ wind)
+It could see that the weekly trend have silimar patterns across months. Wednesdays are the day that the forest fire happens least.
+
+#### Fit linear model and obtain the coef.s
 
 We are now using the `ordered_fireDat` to do some other analysis.
 
 ``` r
 bestMonthAnalysis_head <- read.delim("bestMonthAnalysis.tsv") %>%
-    head()
+    head(16)
 knitr::kable(bestMonthAnalysis_head, digits = 2, align ="r", padding = 10)
 ```
 
@@ -159,6 +167,18 @@ knitr::kable(bestMonthAnalysis_head, digits = 2, align ="r", padding = 10)
 |    oct|         wind|      0.55|       2.52|       0.22|     0.83|
 |    aug|  (Intercept)|      5.30|      11.97|       0.44|     0.66|
 |    aug|         wind|      1.76|       2.72|       0.65|     0.52|
+|    sep|  (Intercept)|     18.73|      16.92|       1.11|     0.27|
+|    sep|         wind|     -0.22|       4.37|      -0.05|     0.96|
+|    apr|  (Intercept)|    -23.64|       9.71|      -2.44|     0.05|
+|    apr|         wind|      6.97|       1.88|       3.70|     0.01|
+|    jun|  (Intercept)|     10.63|      10.50|       1.01|     0.33|
+|    jun|         wind|     -1.16|       2.33|      -0.50|     0.63|
+|    jul|  (Intercept)|     -1.03|      20.30|      -0.05|     0.96|
+|    jul|         wind|      4.12|       4.87|       0.85|     0.40|
+|    feb|  (Intercept)|      5.56|       5.45|       1.02|     0.32|
+|    feb|         wind|      0.19|       1.24|       0.15|     0.88|
+
+I fit a linear model of (area ~ wind) in the above code and see whether I could find any coeff.s of some months that are significantly different from 0.
 
 #### Select best month based on whose coefficients' are significant.
 
