@@ -3,8 +3,8 @@ title: "HW7 Automating Data-analysis Pipelines"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   github_document
-fig_width: 6 
-fig_height: 4 
+fig_width: 5
+fig_height: 3 
 ---
 
 ## Overall flowchart of the assignment

@@ -1,4 +1,4 @@
-HW6 Automating Data-analysis Pipelines
+HW7 Automating Data-analysis Pipelines
 ================
 14 November, 2017
 
