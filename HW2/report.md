@@ -17,12 +17,10 @@ I make the libreary and some common variables which could be used throughout the
 source("lib.R")
 ```
 
-    ## Warning: package 'purrr' was built under R version 3.4.2
-
 Data Description
 ----------------
 
-The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names)(Ref 1).
+The `Forest Fires Dataset` was obtained from [UCI](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). This dataset has 517 observations and 12 features. Detailed description of each feature could be obtained from [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.names) (Ref 1).
 
 Data Glance
 -----------
