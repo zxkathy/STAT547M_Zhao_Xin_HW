@@ -196,6 +196,9 @@ knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 
 It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind.
 
+3
+-
+
 3. Generate Figures
 -------------------
 
