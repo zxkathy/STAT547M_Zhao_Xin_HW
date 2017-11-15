@@ -124,9 +124,12 @@ levels(ordered_fireDat$day)
 
 Both variables `month` and `day` are ordered properly, from `jan` to `dec` and from `sun` to `sat`, respectively. Good!
 
+2. Perform Statistical Analyses
+-------------------------------
+
 Now we are interested to see the how the weekly fire count trend varies by each month.
 
-I built the following dataframe for the convinience of applying `ggplot` on it.
+I built the following form of dataframe for the convinience of plotting using `ggplot`.
 
 ``` r
 fire_Day_Month_head <-
@@ -156,9 +159,6 @@ knitr::kable(fire_Day_Month_head, digits = 2, align ="r", padding = 10)
 <center>
 <img src="weeklyTrend.png" style="width:80.0%" />
 </center>
-2. Perform Statistical analysis
--------------------------------
-
 #### Fit linear model and obtain the coef.s (area ~ wind)
 
 We are now using the `ordered_fireDat` to do some other analysis.
@@ -192,7 +192,7 @@ knitr::kable(bestMonthRes, digits = 2, align ="r", padding = 10)
 
 It could be seen that the coefficients of apr are significant, which means are not likely to be 0. In other words, for the dataset belong to apr, there might exist a relationship of area ~ wind.
 
-3. Generate figures
+3. Generate Figures
 -------------------
 
 #### Create a figure for each relative humidity levels.
