@@ -224,3 +224,8 @@ Reference
 ---------
 
 1.  P. Cortez and A. Morais. A Data Mining Approach to Predict Forest Fires using Meteorological Data. In J. Neves, M. F. Santos and J. Machado Eds., New Trends in Artificial Intelligence, Proceedings of the 13th EPIA 2007 - Portuguese Conference on Artificial Intelligence, December, Guimaraes, Portugal, pp. 512-523, 2007. APPIA, ISBN-13 978-989-95618-0-9. Available at: <http://www.dsi.uminho.pt/~pcortez/fires.pdf>
+
+Report your process
+-------------------
+
+In this assignment, I practiced using makefile to do the automated data analysis pipelines. In the very beginning, I am quite confused, but after reading [Jenny's tutorials](), I finally understand how it works. During the assignment, I encountered a problem that the makefile doesn't build if I include my last r file into the report, which is `generate_lm_figures.R`. Interestingly, if I ran that file individually, it works fine, but always encounter an error complaining the mutate function is not working within that file. I went to the office hour and Giulio helped me fix that by commenting out code not used for saing files, i.e. the code displaying tables in the R console. I think probably there is a minor difference between regular R file and the R files used for automating data analysis pipelines.
