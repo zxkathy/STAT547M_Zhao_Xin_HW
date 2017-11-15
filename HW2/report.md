@@ -54,10 +54,12 @@ Detailed description of each feature could be obtained from [here](https://archi
 #### Reorder the data by month
 
 First, let's show the bar chart of number of forest fires within each month, with `month` unordered.
+
 <center>
 <img src="unorderedCount.png" style="width:60.0%" />
 </center>
 Then, let's show the bar chart of number of forest fires within each month, with `month` ordered.
+
 <center>
 <img src="orderedCount.png" style="width:60.0%" />
 </center>
