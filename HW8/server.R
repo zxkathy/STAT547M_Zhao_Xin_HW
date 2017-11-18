@@ -1,5 +1,6 @@
 library(dplyr)
 library(leaflet)
+library(stringr)
 
 function(input, output) {
 	dat <- read.csv("data/dat.csv", header = T)
@@ -16,7 +17,7 @@ function(input, output) {
 	})
 	
 	output$searchResNo <- renderText({
-		str_c("We found ", nrow(filteredDat())," search results, click to check details.", sep="")
+		str_c("We found ", nrow(filteredDat())," search results according to your search criteria, click to check details.", sep="")
 	})
 		
 	output$selectedMap <- renderLeaflet({
@@ -25,5 +26,4 @@ function(input, output) {
 			addTiles() %>%
 			addMarkers(~LONGITUDE, ~LATITUDE, popup = ~LOCATION)
 	})
-	?leaflet
 }

@@ -1,4 +1,5 @@
 #library(shinythemes)
+library(leaflet)
 
 ui <- fluidPage(
 	#theme = shinytheme("flatly"),
