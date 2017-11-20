@@ -3,45 +3,31 @@ library(leaflet)
 library(stringr)
 library(shiny)
 library(shinydashboard)
+library(ggplot2)
+library(shinyjs)
+library(V8)
 
 
 server <- shinyServer(function(input, output) { 
 	dat <- read.csv("data/dat.csv", header = T)
 	dat$CONTINENT == "Ocenia"
 	filteredDat <- reactive({
-		dat %>%
-			dplyr::filter(YEAR >= input$yearInput[1],
-										YEAR <= input$yearInput[2],
-										CONTINENT %in% input$continentInput)
+		
+		if(input$continentInput != "All"){
+			dat %>%
+				filter(YEAR >= input$yearInput[1],
+											YEAR <= input$yearInput[2],
+							 CONTINENT %in% input$continentInput)
+		}else{
+			dat %>%
+				filter(YEAR >= input$yearInput[1],
+							 YEAR <= input$yearInput[2])
+		}
+		
 	})
-	output$introTitle<- renderText({
-		str_to_upper("Introduction")
-	})
-	output$intro <- renderText({
-		"The Significant Earthquake Database contains information on destructive earthquakes 
-		from 2150 B.C. to the present that meet at least one of the following criteria: Moderate 
-		damage (approximately $1 million or more), 10 or more deaths, Magnitude 7.5 or greater, 
-		Modified Mercalli Intensity X or greater, or the earthquake generated a tsunami. "
-	})
-	output$dataTitle<- renderText({
-		str_to_upper("Data Description")
-	})		
-	output$ourData <- renderText({
-		str_c("In our case, I combined this dataset with gapminder dataset to get the continent feature 
-		so that the users could do initial selection by continent. Also, I extracted the data in 
-					the past 100 years, and select the features that are at least 80% complete to make the app
-					response quickly and accurately.")
-	})
-	output$howWork<- renderText({
-		str_to_upper("App Description")
-	})		
-	output$workFlow <- renderText({
-		str_c("In this webpage, your can download a subset of the processed data according to your own 
-					choosing criteria, also, you will have an idea of the earthquake location and magnitude 
-					from the map view. You will find more interactive functions on your own, enjoy!")
-	})
+		
 	output$resTitle<- renderText({
-		str_to_upper("Result")
+		str_to_upper("Result Display")
 	})		
 	output$searchResNo <- renderText({
 		str_c("We found ", nrow(filteredDat())," 
@@ -64,7 +50,7 @@ server <- shinyServer(function(input, output) {
 						 DAMAGE = DAMAGE_DESCRIPTION, LATITUDE, LONGITUDE, CONTINENT)
 	})
 	
-
+	
 	output$selectedMap <- renderLeaflet({
 		if(input$displayInput == "Show labels and circles"){
 			leaflet(data = filteredDat()) %>%
@@ -86,6 +72,31 @@ server <- shinyServer(function(input, output) {
 				addCircles(lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
 									 radius = ~EQ_PRIMARY*1e+5, popup = ~LOCATION)
 		}
+	})
+	
+	output$totCountry <- renderValueBox({
+		count <- nrow(filteredDat())
+		valueBox(count,"Countries Affected",icon = icon("flag-o"), color = 'green') })
+	output$ave_eq <- renderValueBox({
+		valueBox(round(mean(na.omit(filteredDat()[,"EQ_PRIMARY"])),2),
+						 "Average EQ Primary",icon = icon("globe"), color = 'red') })
+	output$ave_dep <- renderValueBox({
+		valueBox(round(mean(na.omit(filteredDat()[,"FOCAL_DEPTH"])),2),
+						 "Average EQ Depth",icon = icon("globe"), color = 'blue') })
+	output$ave_loss <- renderValueBox({
+		valueBox(round(mean(na.omit(filteredDat()[,"DAMAGE_DESCRIPTION"])),2),
+						 "Average Loss",icon = icon("globe"), color = 'yellow') })
+	
+	
+	output$damageAnalysis <- renderPlot({
+		filteredDat()%>%
+			na.omit() %>%
+			ggplot(aes(x = DAMAGE_DESCRIPTION, fill = CONTINENT)) +
+			geom_bar() +
+			xlab("Damage Level") +
+			ylab("# of earthquakes") +
+			coord_flip()
+		
 	})
 	
 	
