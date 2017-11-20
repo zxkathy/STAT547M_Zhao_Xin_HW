@@ -6,26 +6,37 @@ library(shinydashboard)
 library(ggplot2)
 library(shinyjs)
 library(V8)
-
+library(ggvis)
 
 server <- shinyServer(function(input, output) { 
 	dat <- read.csv("data/dat.csv", header = T)
-	dat$CONTINENT == "Ocenia"
+	
 	filteredDat <- reactive({
-		
 		if(input$continentInput != "All"){
 			dat %>%
 				filter(YEAR >= input$yearInput[1],
-											YEAR <= input$yearInput[2],
+							 YEAR <= input$yearInput[2],
 							 CONTINENT %in% input$continentInput)
 		}else{
 			dat %>%
 				filter(YEAR >= input$yearInput[1],
 							 YEAR <= input$yearInput[2])
 		}
-		
 	})
-		
+	
+	# continentSelect <- reactive({
+	# 	switch(input$continentInput,
+	# 				 "Africa" = africa,
+	# 				 "Americas" = americas, 
+	# 				 "Asia" = asia, 
+	# 				 "Europe" = europe, 
+	# 				 "Oceania" = oceania)
+	# })
+	# 
+	# output$nrows <- reactive({
+	# 	nrow(continentSelect())
+	# })
+	
 	output$resTitle<- renderText({
 		str_to_upper("Result Display")
 	})		

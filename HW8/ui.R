@@ -14,6 +14,11 @@ ui <- shinyUI(dashboardPage(
 		checkboxGroupInput("continentInput", "Select Continent",
 											 choices = c("All", "Africa", "Americas", "Asia", "Europe", "Oceania"),
 											 selected = "All"),
+		# conditionalPanel(
+		# 	condition = ("continentSelect != All"),
+		# 	selectInput("smoothMethod", "Method",
+		# 							choices = list("lm", "glm", "gam", "loess", "rlm"))
+		# ),
 		downloadButton("downloadInput", "Download Data"),
 		br(),
 		br(),

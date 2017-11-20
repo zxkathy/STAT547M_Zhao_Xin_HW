@@ -1,15 +1,21 @@
-library(shiny)
-
-shinyApp(
-	ui = fluidPage(
-		useShinyjs(),  # Set up shinyjs
-		actionButton("btn", "Click me"),
-		textInput("text", "Text")
-	),
-	server = function(input, output) {
-		observeEvent(input$btn, {
-			# Change the following line for more examples
-			toggle("text")
-		})
-	}
+ui <- fluidPage(
+	selectInput("dataset", "Dataset", c("diamonds", "rock", "pressure", "cars")),
+	conditionalPanel( condition = "output.nrows",
+										checkboxInput("headonly", "Only use first 1000 rows"))
 )
+server <- function(input, output) {
+	datasetInput <- reactive({
+		switch(input$dataset,
+					 "rock" = rock,
+					 "cars" = cars)
+	})
+	
+
+	output$nrows <- reactive({
+		nrow(datasetInput())
+	})
+	
+	outputOptions(output, "nrows", suspendWhenHidden = FALSE)  
+}
+
+shinyApp(ui, server)
