@@ -21,9 +21,11 @@ This app features with several functions, but mainly could be categorized into t
 					
 ## APP NAVIGATION:
 
-- Please run the app click [here](https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/)
-- Please access app ui [here](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/ui.R)
-- Please access app server [here](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/server.R)
+- Please run the [app](https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/)
+
+- Please access app [ui](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/ui.R)
+
+- Please access app [server](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/server.R)
 
 
 ## APP FEATURES:
