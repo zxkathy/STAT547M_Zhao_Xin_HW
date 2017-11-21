@@ -36,6 +36,7 @@ ui <- shinyUI(dashboardPage(title="Earthquake100",
 		)
 	),
 	dashboardBody(
+		#img(src = "image/eq_pic.png", width = "100%"),
 		h1(textOutput("resTitle")),
 		h4(textOutput("searchResNo")),
 		
