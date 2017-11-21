@@ -23,26 +23,24 @@ In this webpage, your can download a subset of the processed data according to y
 					
 - #### Functional features
 
-    * I am familiar with terminal commands, so push/pull part seems easy to me. 
-
 	+ Show the number of results found whenever the filters change;
 
-+Use the DT package to turn the current results table into an interactive table;
+	+ Use the DT package to turn the current results table into an interactive table;
 
-+Experiment with packages that add extra features to Shiny, such as `shinyjs`, `leaflet`, `shinydashboard`, `ggvis`;
+	+ Experiment with packages that add extra features to Shiny, such as `shinyjs`, `leaflet`, `shinydashboard`, `ggvis`;
 
-+Allow the user to download the results table as a `.csv` file;
+	+ Allow the user to download the results table as a `.csv` file;
 
-+Allow the user to search for multiple continents simultaneously;
+	+ Allow the user to search for multiple continents simultaneously;
 
-+Provide a way for the user to show results from `all` continents.
+	+ Provide a way for the user to show results from `all` continents.
 
-+... and much more!
+	+ ... and much more!
 
--#### Beaty features
+- #### Beaty features
 
-+Place the plot and the table in separate tabs;
+	+ Place the plot and the table in separate tabs;
 
-+Add an image of the UI.
+	+ Add an image of the UI.
 
-+... and much more!
+	+ ... and much more!
