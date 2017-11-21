@@ -10,12 +10,18 @@ The Significant Earthquake Database obtained from NOAA is my main data source. I
 
 In my case, I combined this dataset with gapminder dataset to get the continent feature 
 		so that the users could do initial selection by continent. Also, I extracted the data in 
-					the past 100 years, and select the features that are at least 80% complete to make the app response quickly and accurately
+					the past 100 years, and select the features that are at least 80% complete to make the app response quickly and accurately.
+					
+This app features with several functions, but mainly could be categorized into two parts: 
+
+1. Filter the data according to the client's requirement;
+
+2. Do corresponding statistical analysis.
 								
 					
 ## APP LINKS:
 
-WILL UPDATE LATER
+https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/
 
 
 ## APP FEATURES:
