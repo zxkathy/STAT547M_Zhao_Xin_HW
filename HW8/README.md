@@ -11,10 +11,11 @@ The Significant Earthquake Database obtained from NOAA is my main data source. I
 In my case, I combined this dataset with gapminder dataset to get the continent feature 
 		so that the users could do initial selection by continent. Also, I extracted the data in 
 					the past 100 years, and select the features that are at least 80% complete to make the app response quickly and accurately
-					
-					
+								
 					
 ## APP LINKS:
+
+WILL UPDATE LATER
 
 
 ## APP FEATURES:
