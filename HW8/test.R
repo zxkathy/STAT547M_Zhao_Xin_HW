@@ -1,21 +1,20 @@
-ui <- fluidPage(
-	selectInput("dataset", "Dataset", c("diamonds", "rock", "pressure", "cars")),
-	conditionalPanel( condition = "output.nrows",
-										checkboxInput("headonly", "Only use first 1000 rows"))
-)
+library(shiny)
+library(ggvis)
+ui <- shinyUI(
+	fluidPage(
+	mainPanel(
+		sliderInput("size", "Area", 10, 1000, value =10),
+		uiOutput("ggvis_ui"),
+		ggvisOutput("ggvis")
+	)
+))
 server <- function(input, output) {
-	datasetInput <- reactive({
-		switch(input$dataset,
-					 "rock" = rock,
-					 "cars" = cars)
-	})
-	
+	input_size <- reactive(input$size)
 
-	output$nrows <- reactive({
-		nrow(datasetInput())
-	})
-	
-	outputOptions(output, "nrows", suspendWhenHidden = FALSE)  
+	mtcars %>%
+		ggvis(~disp, ~mpg, size := input_size) %>%
+		layer_points() %>%
+		bind_shiny("ggvis", "ggvis_ui")
 }
 
 shinyApp(ui, server)

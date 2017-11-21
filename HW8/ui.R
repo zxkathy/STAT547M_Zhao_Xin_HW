@@ -28,7 +28,10 @@ ui <- shinyUI(dashboardPage(
 			
 			
 			menuItem("Selected Data Analysis"),
-			menuSubItem("Click: Histogram of damage levels", tabName = "histAnalysis", 
+			menuSubItem("Histogram - damage levels", tabName = "histAnalysis", 
+									icon = icon("align-left")),
+			menuItem("Full Data Analysis"),
+			menuSubItem("Scatterplot - primary vs depth", tabName = "plotAnalysis", 
 									icon = icon("align-left"))
 		)
 	),
@@ -58,7 +61,14 @@ ui <- shinyUI(dashboardPage(
 								leafletOutput('selectedMap'))
 			),
 			tabItem(tabName = "histAnalysis",
-							fluidPage(plotOutput("damageAnalysis")))
+							fluidPage(h2(textOutput("histTitle")),
+												plotOutput("damageAnalysis"))),
+			tabItem(tabName = "plotAnalysis",
+							fluidPage(h2(textOutput("plotTitle")),
+												sliderInput("size", "Area", 10, 1000, value = 300),
+												sliderInput("slider", "Smooth Level", 0.1, 2.5, value = 0.75, step = 0.1),
+												uiOutput("ggvis_ui"),
+												ggvisOutput("ggvis")))
 		)
 	)
 ))

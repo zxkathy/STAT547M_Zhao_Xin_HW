@@ -8,7 +8,7 @@ library(shinyjs)
 library(V8)
 library(ggvis)
 
-server <- shinyServer(function(input, output) { 
+server <- shinyServer(function(input, output, session) { 
 	dat <- read.csv("data/dat.csv", header = T)
 	
 	filteredDat <- reactive({
@@ -61,6 +61,13 @@ server <- shinyServer(function(input, output) {
 						 DAMAGE = DAMAGE_DESCRIPTION, LATITUDE, LONGITUDE, CONTINENT)
 	})
 	
+	output$plotTitle <- renderText({
+		"Scatterplot of EQ_PRIMARY vs FOCAL_DEPTH on Full Data"
+	})
+		
+	output$histTitle <- renderText({
+		"Histogram of DAMAGE_DESCRIPTION on Selected Data"
+	})
 	
 	output$selectedMap <- renderLeaflet({
 		if(input$displayInput == "Show labels and circles"){
@@ -93,10 +100,10 @@ server <- shinyServer(function(input, output) {
 						 "Average EQ Primary",icon = icon("globe"), color = 'red') })
 	output$ave_dep <- renderValueBox({
 		valueBox(round(mean(na.omit(filteredDat()[,"FOCAL_DEPTH"])),2),
-						 "Average EQ Depth",icon = icon("globe"), color = 'blue') })
+						 "Average EQ Depth",icon = icon("spinner"), color = 'blue') })
 	output$ave_loss <- renderValueBox({
 		valueBox(round(mean(na.omit(filteredDat()[,"DAMAGE_DESCRIPTION"])),2),
-						 "Average Loss",icon = icon("globe"), color = 'yellow') })
+						 "Average Loss",icon = icon("dollar"), color = 'yellow') })
 	
 	
 	output$damageAnalysis <- renderPlot({
@@ -109,7 +116,17 @@ server <- shinyServer(function(input, output) {
 			coord_flip()
 		
 	})
+
+	input_size <- reactive(input$size)
+	input_slid <- reactive(input$slider)
 	
+	dat %>%
+		na.omit() %>%
+		ggvis(~EQ_PRIMARY, ~FOCAL_DEPTH) %>%
+		layer_points(size := input_size) %>%
+		layer_points(fill := "red", opacity := 0.3, size := input_size) %>%
+		layer_smooths(span = input_slid) %>%
+		bind_shiny("ggvis", "ggvis_ui")
 	
 	
 }
