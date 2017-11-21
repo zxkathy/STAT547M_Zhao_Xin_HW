@@ -19,9 +19,11 @@ This app features with several functions, but mainly could be categorized into t
 2. Do corresponding statistical analysis.
 								
 					
-## APP LINKS:
+## APP NAVIGATION:
 
-https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/
+- Please run the app click [here](https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/)
+- Please access app ui [here](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/ui.R)
+- Please access app server [here](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW8/server.R)
 
 
 ## APP FEATURES:
@@ -31,14 +33,7 @@ In this webpage, your can download a subset of the processed data according to y
 - #### Functional features
 
 	+ Show the number of results found whenever the filters change;
-
 	+ Use the DT package to turn the current results table into an interactive table;
-	
-## Data source
-
-1. National Geophysical Data Center / World Data Service (NGDC/WDS): Significant Earthquake Database. National Geophysical Data Center, NOAA. doi:10.7289/V5TD9V7K
-
-2. http://www.gapminder.org/data/
 
 	+ Experiment with packages that add extra features to Shiny, such as `shinyjs`, `leaflet`, `shinydashboard`, `ggvis`;
 
@@ -57,3 +52,9 @@ In this webpage, your can download a subset of the processed data according to y
 	+ Add an image of the UI.
 
 	+ ... and much more!
+	
+## Data source
+
+1. National Geophysical Data Center / World Data Service (NGDC/WDS): [Significant Earthquake Database](https://www.ngdc.noaa.gov/nndc/struts/form?t=101650&s=1&d=1). National Geophysical Data Center, NOAA. doi:10.7289/V5TD9V7K
+
+2. [Gapminder data](http://www.gapminder.org/data/) built in R
