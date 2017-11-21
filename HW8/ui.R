@@ -3,8 +3,8 @@ library(leaflet)
 library(shinyjs)
 library(V8)
 
-ui <- shinyUI(dashboardPage(
-	dashboardHeader(),
+ui <- shinyUI(dashboardPage(title="Earthquake100",
+	dashboardHeader(title = "Earthquake 100 years"),
 	dashboardSidebar(
 		sidebarMenu(
 			menuItem("Data Filter Selections")

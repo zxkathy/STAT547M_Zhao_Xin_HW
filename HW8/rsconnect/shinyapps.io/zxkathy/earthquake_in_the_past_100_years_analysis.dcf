@@ -1,0 +1,12 @@
+name: earthquake_in_the_past_100_years_analysis
+title: Earthquake in the past 100 years analysis
+username:
+account: zxkathy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 238189
+bundleId: 1087264
+url: https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/
+when: 1511241906.18742
+asMultiple: FALSE
+asStatic: FALSE
