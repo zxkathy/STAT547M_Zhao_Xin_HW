@@ -33,6 +33,12 @@ In this webpage, your can download a subset of the processed data according to y
 	+ Show the number of results found whenever the filters change;
 
 	+ Use the DT package to turn the current results table into an interactive table;
+	
+## Data source
+
+1. National Geophysical Data Center / World Data Service (NGDC/WDS): Significant Earthquake Database. National Geophysical Data Center, NOAA. doi:10.7289/V5TD9V7K
+
+2. http://www.gapminder.org/data/
 
 	+ Experiment with packages that add extra features to Shiny, such as `shinyjs`, `leaflet`, `shinydashboard`, `ggvis`;
 
