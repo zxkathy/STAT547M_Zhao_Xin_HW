@@ -21,9 +21,8 @@ In my case, I combined this dataset with gapminder dataset to get the continent 
 
 In this webpage, your can download a subset of the processed data according to your own choosing criteria, also, you will have an idea of the earthquake location and magnitude from the map view. You will find more interactive functions on your own, enjoy!
 					
--#### Functional features
-
-+Show the number of results found whenever the filters change;
+- #### Functional features
++ Show the number of results found whenever the filters change;
 
 +Use the DT package to turn the current results table into an interactive table;
 
