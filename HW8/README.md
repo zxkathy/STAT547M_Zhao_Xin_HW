@@ -25,7 +25,7 @@ In this webpage, your can download a subset of the processed data according to y
 
     * I am familiar with terminal commands, so push/pull part seems easy to me. 
 
-+ Show the number of results found whenever the filters change;
+	+ Show the number of results found whenever the filters change;
 
 +Use the DT package to turn the current results table into an interactive table;
 
