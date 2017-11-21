@@ -2,6 +2,7 @@ library(shinydashboard)
 library(leaflet)
 library(shinyjs)
 library(V8)
+library(ggvis)
 
 ui <- shinyUI(dashboardPage(title="Earthquake100",
 	dashboardHeader(title = "Earthquake 100 years"),

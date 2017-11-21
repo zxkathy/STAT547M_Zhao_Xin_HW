@@ -5,8 +5,8 @@ account: zxkathy
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 238189
-bundleId: 1087281
+bundleId: 1087349
 url: https://zxkathy.shinyapps.io/earthquake_in_the_past_100_years_analysis/
-when: 1511242998.2365
+when: 1511246913.19247
 asMultiple: FALSE
 asStatic: FALSE
