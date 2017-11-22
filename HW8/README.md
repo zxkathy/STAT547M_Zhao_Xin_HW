@@ -55,8 +55,24 @@ In this webpage, your can download a subset of the processed data according to y
 
 	+ ... and much more!
 	
-## Data source
+## DATA SOURCE
 
 1. National Geophysical Data Center / World Data Service (NGDC/WDS): [Significant Earthquake Database](https://www.ngdc.noaa.gov/nndc/struts/form?t=101650&s=1&d=1). National Geophysical Data Center, NOAA. doi:10.7289/V5TD9V7K
 
 2. [Gapminder data](http://www.gapminder.org/data/) built in R
+
+## REPORT YOUR PROCESS
+
+In this homework, I encountered a lot of debugging problems. 
+
+- First, as the syntax within dashboard template are a little bit different than normal shiny apps, and there are limited resouces available. I have to rerun every time I add a new feature to make sure it works. 
+
+- Second, as I am not used to add a comma at every sentence, and also there are so many brackets needed for my code, so sometimes, I got an error due to little mistakes and it takes me hours to debug.
+
+- Third, I was having troubles pushing my add to shiny.io, when my code works perfectly in my local end. I tried so many times, and it still does not work. I was about to go to office hours, but suddenly one push works. I don't quite get why it is the case.
+
+- Fourth, I have to say it is really fun to develop this app cause it would be very useful for displaying my further research results.
+
+- The helpful resources:
+	+ [Interactivety](https://ggvis.rstudio.com/interactivity.html)
+	+ [Global terror](https://hackmd.io/KYTgZgDAhgRgJnAtADgKwgEyICwwMyooDGEwiRqR2GA7JRgIw0BsQA==)
