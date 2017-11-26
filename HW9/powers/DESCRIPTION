@@ -2,10 +2,13 @@ Package: powers
 Type: Package
 Title: simple computation of powers
 Version: 0.1.0
-Author: this is Kathy Zhao
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author@R: person("Kathy", "Zhao", email = "kathy.zhao@stat.ubc.ca",
+    role = c("aut", "cre"))
+Description: The package include following functions, 
+    squre(): take the square of a vector; 
+    boxcox(): take the boxcox transformations of a vector,
+    boxcox.inv(): take the inverse boxcox transformations of a vector,
+    na.filter(): filter out NA values by row or columns in a dataset
 License: License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

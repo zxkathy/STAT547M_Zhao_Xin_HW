@@ -1,12 +1,10 @@
-#' Convenient Computation of Powers
+#' powers
 #'
-#' Are you tired of using the power operator, \code{^} or \code{**} in R?
-#' Use this package to call functions that apply common powers
-#' to your vectors.
-#'
+#' This pakcage provides with simple operations of vector/dataframe, such as
+#' take the square of a vector, take boxcox transformation of a vector, and
+#' filter out NA operations on a data frame.
 #' @name powers
-#' @author Vincenzo Coia
-#' @note This package isn't actually meant to be serious. It's just for
-#' teaching purposes.
+#' @author Kathy Zhao
+#' @note This package serves for the HW9 of STAT547M.
 #' @docType package
-NULL
+

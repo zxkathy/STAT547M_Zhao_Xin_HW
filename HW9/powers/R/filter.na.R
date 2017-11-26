@@ -20,8 +20,10 @@
 #' }
 #'
 #' @examples
-#' boxcox(1:10, 2)
-#' boxcox(2, 0)
+#' m <- as.data.frame(cbind(c(1,2,1), c(2,2,NA)))
+#' filter.na(m, direction = "col")
+#' filter.na(m, direction = "row")$FilteredData
+#'
 #' @export
 filter.na <- function(x, direction){
 	hasNA <- TRUE
@@ -46,5 +48,4 @@ filter.na <- function(x, direction){
 	return(list(ContainNA = hasNA, FilteredData = omit.x))
 }
 
-x <- as.data.frame(cbind(c(1,2,1), c(2,2,NA)))
-filter.na(x, direction = "col")
+

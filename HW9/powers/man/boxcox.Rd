@@ -2,31 +2,27 @@
 % Please edit documentation in R/boxcox.R
 \name{boxcox}
 \alias{boxcox}
-\title{Boxcox transformation of a vector}
+\title{Boxcox/inverse boxcox transformation of a vector/number}
 \usage{
 boxcox(x, lambda)
 }
 \arguments{
-\item{x}{The vector to be boxcoxed.}
+\item{x}{The vector to be boxcoxed/inverse boxcoxed.}
 
 \item{lambda}{The parameter of Box–Cox transformation}
 }
 \value{
-A vector that is the boxcox transformation of \code{x}.
+A vector/number that is the boxcox/inverse boxcox transformation of \code{x}.
 }
 \description{
 Transforms via the Box-Cox transform.
 }
 \details{
 We only do the boxcox transformations that only requires one input.
-
-Here are some reasons why putting a list in this section is excessive:
-\itemize{
-     \item This \code{boxcox} function only requires one input.
-     \item There's nothing else to say about \code{boxcox}.
-}
 }
 \examples{
 boxcox(1:10, 2)
+boxcox.inv(1:10, 2)
 boxcox(2, 0)
+boxcox.inv(2, 0)
 }
