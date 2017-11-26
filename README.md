@@ -26,6 +26,6 @@
 
 ## [Homework 9](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW9/README.md): Building your own R package
 
-- ####[Package of `powers`](https://github.com/zxkathy/powers)
+- #### [Package of `powers`](https://github.com/zxkathy/powers)
 
-- ####[Package README](https://github.com/zxkathy/powers/blob/master/README.md)
+- #### [Package README](https://github.com/zxkathy/powers/blob/master/README.md)
