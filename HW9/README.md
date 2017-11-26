@@ -1,13 +1,26 @@
-# STAT547M_Zhao_Xin_HW
+# STAT547M HW9
 
-## [Homework 1](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/tree/master/HW6): Data wrangling wrap up
+## Package Navigation
 
-- #### [Task 1](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW6/Task1/HW01_1.md): Character data
-- #### [Task 2](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW6/Task2/HW01_2.md): Writing functions
-- #### [Task 4](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW6/Task4/HW01_4.md): Work with the `singer` data
-- #### [Taks 6](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW6/Task6/HW01_6.md): Work with a nested data frame
+- The link to my [powers package]()
 
-## [Homework 2](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/tree/master/HW7): Automating Data-analysis Pipelines
+- The link to my package [README]()
 
-- #### [Report](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW7/report.md)
-- #### [Makefile](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW7/Makefile)
+- The link to my package [vignettes]()
+
+## Features of power package
+
+This package contains 4 functions in total: 
+
+- squre(): take the square of a vector; 
+
+- boxcox(): take the boxcox transformations of a vector,
+
+- boxcox.inv(): take the inverse boxcox transformations of a vector, `boxcox()` dependency
+    
+- na.filter(): filter out NA values by row or columns in a dataset, whether `row` or `col` should be specified by the user
+
+## Report your progress
+
+In this assignment, I extended and complete the `powers` package we designed in class, making three more functions while add a throw error argument for the existing  `square()` function. It was pretty fun and not hard designing the functions, however, the uploading and documentation makes this homework a little bit complicated to me.
+
