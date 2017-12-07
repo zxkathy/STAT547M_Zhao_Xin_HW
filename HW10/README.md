@@ -1,24 +1,8 @@
-# STAT547M HW9
+# STAT547M HW10
 
-## Package Navigation
+## Homework Navigation
 
-- The link to my [powers package](https://github.com/zxkathy/powers)
-
-- The link to my package [README](https://github.com/zxkathy/powers/blob/master/README.md)
-
-- The link to my package [vignettes](https://github.com/zxkathy/powers/blob/master/vignettes/power_vignette.Rmd)
-
-## Features of power package
-
-This package contains 4 functions in total: 
-
-- [squre()](https://github.com/zxkathy/powers/blob/master/R/square.R): take the square of a vector; 
-
-- [boxcox()](https://github.com/zxkathy/powers/blob/master/R/boxcox.R): take the boxcox transformations of a vector,
-
-- [boxcox.inv()](https://github.com/zxkathy/powers/blob/master/R/boxcox.inv.R): take the inverse boxcox transformations of a vector, `boxcox()` dependency
-    
-- [na.filter()](https://github.com/zxkathy/powers/blob/master/R/filter.na.R): filter out NA values by row or columns in a dataset, whether `row` or `col` should be specified by the user
+- The link to my [HW10](https://github.com/zxkathy/STAT547M_Zhao_Xin_HW/blob/master/HW10/HW10.md)
 
 ## Report your progress
 
