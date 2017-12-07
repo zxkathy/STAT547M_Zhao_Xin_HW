@@ -181,22 +181,24 @@ html_table(climate, header = TRUE, fill = TRUE)[[2]]
 
 #### Taks2.2  Scrap Your Own Data
 
+In this task, I will analyze the recent listed house information located in the central location of Vancouver (i.e. Downtown Vancouver West) and central location of Burnaby (i.e. Metrotown) obtained from  [`The Rick Clarke Team`](http://www.realestatevalley.ca/). I will detailed break down my solution when analyzing the info for Downtown Vancouver West, and will bulk extract info for Metrotown.
+
 ```{r, results='asis'}
 source("read_dat.R")
-info <- list()
-df <- c()
+info_van <- info_bur <- list()
+df_van <- df_bur <- c()
 for(i in 1:length(h)){
-	info[[i]] <- html_nodes(h[[i]], css = "dd")
-	info_text <- html_text(info[[i]])
+	info_van[[i]] <- html_nodes(h[[i]], css = "dd")
+	info_text <- html_text(info_van[[i]])
 	pageHouse <- matrix(NA, nrow = length(info_text)/9, ncol = 9) %>%
 			data.frame()
 	for(j in 1:length(info_text)){
 		pageHouse[floor(j/10 + 1), ifelse(j %% 9 == 0, 9, j %% 9)] <- info_text[j]
 	}
-	df <- bind_rows(df, pageHouse %>%na.omit())
+	df_van <- bind_rows(df_van, pageHouse %>%na.omit())
 }
 
-df[1,] %>%
+df_van[1,] %>%
 	knitr::kable()
 ```
 
@@ -213,15 +215,15 @@ name
 After extract the plain text info of column names, I found it is not in good format, i.e. there are `:`s after the names, so I am extract the character info before `:`s. 
 
 ```{r}
-names(df) <- name %>%
+names(df_van) <- name %>%
 	substr(1,regexpr(":", name)-1)
 
-dim(df)
+dim(df_van)
 ```
 
-After renaming the data frame, we got 90 rows, which means we got 90 house info. Let's have a look at the head part of data frame. 
+After renaming the data frame, we got 92 rows, which means we got 92 houses' info. Let's have a look at the head part of data frame. 
 
-Before using the data frame `df` doing any analysis, we need to change to character columns to number columns, such as `Price`, `Beds`, `Baths`
+Before using the data frame `df_van` doing any analysis, we need to change to character columns to number columns, such as `Price`, `Beds`, `Baths`
 
 ```{r, results='asis'}
 remDol <- function(char){
@@ -229,16 +231,53 @@ remDol <- function(char){
 		substr(2, nchar(char))
 }
 
-house_dat <- 
-	df %>%
-	mutate(BedN = as.numeric(df$Beds),
-				 BathN = as.numeric(df$Baths),
-				 PriceChar = unlist(map(df$Price, remDol)), 
+van_house_dat <- 
+	df_van %>%
+	mutate(BedN = as.numeric(df_van$Beds),
+				 BathN = as.numeric(df_van$Baths),
+				 PriceChar = unlist(map(df_van$Price, remDol)), 
 				 PriceInK = round(as.numeric(PriceChar)/1000, 0)) %>%
 	select(`MLS® #`, PriceInK, BedN:BathN, Type, Address, Subdivision, Area)
 
-house_dat %>%
+van_house_dat %>%
 	head(10) %>%
 	knitr::kable()
+```
+
+Let's analyze the Burnaby's data.
+
+```{r}
+for(i in 1:length(b)){
+	info_bur[[i]] <- html_nodes(b[[i]], css = "dd")
+	info_text <- html_text(info_bur[[i]])
+	pageHouse <- matrix(NA, nrow = length(info_text)/9, ncol = 9) %>%
+		data.frame()
+	for(j in 1:length(info_text)){
+		pageHouse[floor(j/10 + 1), ifelse(j %% 9 == 0, 9, j %% 9)] <- info_text[j]
+	}
+	df_bur <- bind_rows(df_bur, pageHouse %>%na.omit())
+}
+
+names(df_bur) <- name %>%
+	substr(1,regexpr(":", name)-1)
+
+bur_house_dat <-
+	df_bur %>%
+	mutate(BedN = as.numeric(df_bur$Beds),
+				 BathN = as.numeric(df_bur$Baths),
+				 PriceChar = unlist(map(df_bur$Price, remDol)),
+				 PriceInK = round(as.numeric(PriceChar)/1000, 0)) %>%
+	select(`MLS® #`, PriceInK, BedN:BathN, Type, Address, Subdivision, Area)
+
+full_house_dat <- rbind(van_house_dat, bur_house_dat)
+```
+
+
+Next, let's take use of this cleaned data frame and do some statistical analysis.
+
+(1)
+
+```{r}
+
 ```
 
