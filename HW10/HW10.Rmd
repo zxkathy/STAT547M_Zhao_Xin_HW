@@ -2,6 +2,9 @@
 title: "HW10 Data from the Web"
 output: github_document
 ---
+
+## Task 1: Make API queries "by hand" using `httr`
+
 ## Pre-Work
 
 Load the required packages needed for the assignment.
@@ -14,9 +17,6 @@ library(purrr)
 library(jsonlite)
 library(tidyr)
 ```
-
-
-## Task 1: Make API queries "by hand" using `httr`
 
 API info is obtained from the website [`Star Wars API`](https://swapi.co). I noticed for this particular website, the authorization token is nor required when requiring a API.
 
@@ -306,4 +306,50 @@ full_house_dat %>%
 
 It can be seen that most of the houses on the market are below 5 million in Downtown Vancouver West, and most houses are below 2 million in Metrotown.
 
+## Use an R package that wraps an API
 
+#### Pre-Work
+
+```{r, message=FALSE, warning=FALSE}
+library(gapminder)
+library(geonames)
+library(countrycode)
+```
+
+#### Prompt 1
+
+```{r, results='asis', warning=FALSE, message=FALSE}
+options(geonamesUsername = "zhxkathy")
+ctryInfo <- GNcountryInfo()
+addInfo <- ctryInfo %>%
+	mutate(country = as.factor(
+		countrycode(ctryInfo$isoAlpha3, 'iso3c',  'country.name.en'))) %>%
+	select(-continent)
+
+gp_full <- left_join(gapminder, addInfo, by = "country") %>%
+	select(-c(countryName,continentName,fipsCode))
+
+gp_full %>%
+	head(20) %>%
+	knitr::kable()
+```
+
+- Consider population density against time
+
+```{r}
+gp_full %>%
+	mutate(popDensity = pop/as.numeric(areaInSqKm)) %>%
+	filter(continent != "Oceania") %>%
+	ggplot(aes(x = year, 
+						 y = popDensity, 
+						 group = country, 
+						 color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) + 
+	facet_wrap(~ continent) +
+  scale_color_manual(values = country_colors) + 
+	theme_bw() +
+  theme(strip.text = element_text(size = rel(1.1))) + 
+	scale_y_log10() +
+	ylab("Log of Population Density") +
+	xlab("Year")
+```
