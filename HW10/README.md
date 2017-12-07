@@ -6,6 +6,8 @@
 
 ## Report your progress
 
-In this assignment, I extended and complete the `powers` package we designed in class, making three more functions while add a throw error argument for the existing  `square()` function. It was pretty fun and not hard designing the functions, however, the uploading and documentation makes this homework a little bit complicated to me. Also, there are so many links showing in the documents, so hopefully, all of them work.
+In this assignment, I tried all three Tasks, which is really interesting and really challenging for me. The difficulty in the first task is that, the webpages are not inclusive to each other. So when extracting the infomation, there might be a chance that I get duplicated info. In order to avoid the issue, I made a task myself. But generally speaking, this task is easier than the second one.
 
-I went through the [instructor's note](http://stat545.com/cm109-110-notes_and_exercises.html) again, and create another whole repository in github for this function, and found it could work finally. I am a little bit confused about the difference between package README.md file and vignettes.rmd file. After searching the website, I found some experienced programmers suggest that they should be identical. You can find more details in this [link](https://community.rstudio.com/t/readme-md-vs-package-vignette-vs-package-documentation/1359/3).
+In the second task, it was really painful for me to extract css info and read and find out the exact knot, I watched several tutorials on Youtube, but it seems they are not as very useful becasue most of them are coded by Java or C++. Even though I have some backgrounds in those coding languages, I have trouble understanding those tutorials. I finally tried by myself and got something. The only thing I would like to do for any improvements in the future is that, I would change my MLS data website source if possible, because current one has only few limited info and the adds pop quite often out when I tried to check around it.
+
+The simplest task is third one. I feel that using the R package to wrap an API is easiest. It was like using the regular R functions.  
